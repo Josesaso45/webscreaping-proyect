@@ -31,7 +31,8 @@ if response.status_code == 200:
     #Busqueda de elementos por etquetas y clases
 
     first_div = soup.find('div', class_='section') # Obtiene la primera etiqueta div con la clase 'first'
-    print(first_div) 
+    print(first_div.get_text()) # Imprime el contenido de la primera etiqueta div con la clase 'first'
+    print("jose")
 
     div_section = soup.find_all('div', class_='section') # Obtiene todas las etiquetas div con la clase 'section'
     print(div_section)
