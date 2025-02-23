@@ -1,8 +1,15 @@
 import requests
-
 from bs4 import BeautifulSoup
+from datetime import datetime  # Importa el módulo datetime
+
 
 url= 'https://cuantoestaeldolar.pe/'
+
+fecha_hora_actual = datetime.now() # Obtiene la fecha y hora actual 
+
+fecha_hora_formateada = fecha_hora_actual.strftime("%Y-%m-%d %H:%M") # Formatea la fecha y hora
+
+print("Fecha y hora: ", fecha_hora_formateada) # Imprime la fecha y hora
 
 response = requests.get(url) # Realiza una petición GET a la página web
 
@@ -21,4 +28,10 @@ if response.status_code == 200:
     div_sell = empresas_all[0].find('div',class_='ValueCurrency_content_sale__fdX_P') # Obtiene el
     sell = div_sell.find('p').getText() # Obtiene el texto del tag p
 
-    print('Compra: ',buy, " | Venta: ",sell)
+    # Obtiene el nombre de la empresa
+    img = empresas_all[0].find('img')
+    compamy = img['alt']
+
+    print("Empresa: " + compamy, "Compra: ",buy, " | Venta: ",sell) # Tipo de cambio
+
+#Los siguientes pasos es la generacion de listas para generar un archivo csv o dataframe
