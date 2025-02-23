@@ -13,6 +13,11 @@ print("Fecha y hora: ", fecha_hora_formateada) # Imprime la fecha y hora
 
 response = requests.get(url) # Realiza una petición GET a la página web
 
+companies = [] # Lista para almacenar las empresas
+buys = [] # Lista para almacenar los precios de compra
+sells = [] # Lista para almacenar los precios de venta
+fecha_de_extraccion = [] # Lista para almacenar la fecha y hora de extracción
+
 if response.status_code == 200: 
     soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -26,17 +31,21 @@ if response.status_code == 200:
         # Obtiene el tipo de cambio compras
         div_buy = empresa.find('div',class_='ValueCurrency_content_buy__Z9pSf')
         buy = div_buy.find('p').getText()
+        buys.append(buy)
 
         # Obtiene el tipo de cambio ventas
         div_sell = empresa.find('div',class_='ValueCurrency_content_sale__fdX_P')
         sell = div_sell.find('p').getText()
+        sells.append(sell)
 
         # Obtiene el nombre de la empresa
         img = empresa.find('img')
-        compamy = img['alt']
+        company = img['alt']
+        companies.append(company)   
 
-        #print(compamy, "Compra: ",buy, " | Venta: ",sell)
-        #print("-----------------------------")
-        print(compamy,buy,sell,fecha_hora_formateada)
+        fecha_de_extraccion.append(fecha_hora_formateada)
+
+# Imprime las empresas listadas para generar un archivo csv o dataframe
+print(companies)
 
 
