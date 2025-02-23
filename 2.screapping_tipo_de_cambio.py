@@ -7,8 +7,8 @@ from datetime import datetime  # Importa el módulo datetime
 url= 'https://cuantoestaeldolar.pe/'
 
 fecha_hora_actual = datetime.now() # Obtiene la fecha y hora actual 
-
 fecha_hora_formateada = fecha_hora_actual.strftime("%Y-%m-%d %H:%M") # Formatea la fecha y hora
+fecha_file = fecha_hora_actual.strftime("%Y-%m-%d")
 
 print("Fecha y hora: ", fecha_hora_formateada) # Imprime la fecha y hora
 
@@ -60,8 +60,13 @@ if response.status_code == 200:
 
     print(df.head(15))
 
-    df.to_csv('tipo_de_cambio.csv', index=False) # Genera un archivo csv con la información extraída
+    file = f'tipo_de_cambio_{fecha_file}.csv' # Nombre del archivo csv
+
+    df.to_csv(file, index=False) # Genera un archivo csv con la información extraída
     print("Archivo csv generado con éxito") # Imprime un mensaje de éxito
 
 else:
         print("Error al extraer la información",response.status_code) # Imprime un mensaje de error
+
+#function upload_to_cloud():
+    #Pasos para subir un archivo csv a cloud
