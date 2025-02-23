@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
 from datetime import datetime  # Importa el módulo datetime
 
 
@@ -45,7 +46,22 @@ if response.status_code == 200:
 
         fecha_de_extraccion.append(fecha_hora_formateada)
 
-# Imprime las empresas listadas para generar un archivo csv o dataframe
-print(companies)
+    # Imprime las empresas listadas para generar un archivo csv o dataframe
+    print(companies)
 
+    df = pd.DataFrame(
+        {
+            'empresa': companies,
+            'Compra': buys,
+            'Venta': sells,
+            'Fecha de extracción': fecha_de_extraccion
+        }
+    )
 
+    print(df.head(15))
+
+    df.to_csv('tipo_de_cambio.csv', index=False) # Genera un archivo csv con la información extraída
+    print("Archivo csv generado con éxito") # Imprime un mensaje de éxito
+
+else:
+        print("Error al extraer la información",response.status_code) # Imprime un mensaje de error
