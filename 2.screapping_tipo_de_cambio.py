@@ -16,22 +16,27 @@ response = requests.get(url) # Realiza una petición GET a la página web
 if response.status_code == 200: 
     soup = BeautifulSoup(response.text, 'html.parser')
 
+    #Los siguientes pasos es la generacion de listas para generar un archivo csv o dataframe
+
     # Obtiene el tipo de cambio compras y ventas
     empresas_all = soup.find_all('div',class_='ExchangeHouseItem_item_col__gudqq')
     #print(empresas_all[0])
 
-    # Obtiene el tipo de cambio compras
-    div_buy = empresas_all[0].find('div',class_='ValueCurrency_content_buy__Z9pSf')
-    buy = div_buy.find('p').getText()
+    for empresa in empresas_all:
+        # Obtiene el tipo de cambio compras
+        div_buy = empresa.find('div',class_='ValueCurrency_content_buy__Z9pSf')
+        buy = div_buy.find('p').getText()
 
-    # Obtiene el tipo de cambio ventas
-    div_sell = empresas_all[0].find('div',class_='ValueCurrency_content_sale__fdX_P') # Obtiene el
-    sell = div_sell.find('p').getText() # Obtiene el texto del tag p
+        # Obtiene el tipo de cambio ventas
+        div_sell = empresa.find('div',class_='ValueCurrency_content_sale__fdX_P')
+        sell = div_sell.find('p').getText()
 
-    # Obtiene el nombre de la empresa
-    img = empresas_all[0].find('img')
-    compamy = img['alt']
+        # Obtiene el nombre de la empresa
+        img = empresa.find('img')
+        compamy = img['alt']
 
-    print("Empresa: " + compamy, "Compra: ",buy, " | Venta: ",sell) # Tipo de cambio
+        #print(compamy, "Compra: ",buy, " | Venta: ",sell)
+        #print("-----------------------------")
+        print(compamy,buy,sell,fecha_hora_formateada)
 
-#Los siguientes pasos es la generacion de listas para generar un archivo csv o dataframe
+
